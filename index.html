@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
+    />
+    <title>Court Clash Pickleball</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="stage">
+      <canvas id="c"></canvas>
+      <div id="probe"></div>
+      <div id="hud">
+        <div id="score"></div>
+        <div>
+          <button class="ib" id="mu" type="button" aria-label="Mute sound" title="Mute sound">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z"/><path d="M16 9a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12"/></svg>
+          </button>
+          <button class="ib" id="pa" type="button" aria-label="Pause" title="Pause">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h3v14H8zm6 0h3v14h-3z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="desktopSkillControls" class="skill-controls desktop-skill-controls" aria-label="Trick strikes">
+        <button class="skill-button" type="button" data-skill="drive"><span class="skill-name">Drive</span><span class="skill-key">Q</span><span class="skill-cooldown"></span></button>
+        <button class="skill-button" type="button" data-skill="drop"><span class="skill-name">Drop</span><span class="skill-key">E</span><span class="skill-cooldown"></span></button>
+        <button class="skill-button" type="button" data-skill="curve"><span class="skill-name">Curve</span><span class="skill-key">R</span><span class="skill-cooldown"></span></button>
+      </div>
+      <div
+        id="touchControls"
+        class="touch-controls"
+        aria-label="Touch controls"
+      >
+        <div class="move-control">
+          <span class="control-label">MOVE</span>
+          <button
+            id="moveStick"
+            type="button"
+            aria-label="Move joystick"
+            aria-pressed="false"
+          >
+            <span id="stickNub" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="hit-skill-cluster">
+          <button id="hitTouch" type="button" aria-label="Hit or serve">HIT</button>
+          <div id="mobileSkillControls" class="skill-controls mobile-skill-controls" aria-label="Trick strikes">
+            <button class="skill-button" type="button" data-skill="drive" aria-label="Power Drive"><span class="skill-name">Drive</span><span class="skill-cooldown"></span></button>
+            <button class="skill-button" type="button" data-skill="drop" aria-label="Drop Shot"><span class="skill-name">Drop</span><span class="skill-cooldown"></span></button>
+            <button class="skill-button" type="button" data-skill="curve" aria-label="Topspin Curve"><span class="skill-name">Curve</span><span class="skill-cooldown"></span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ov" id="menu">
+        <h1>Court Clash<br />Pickleball</h1>
+        <p>
+          First to 11, win by 2. Every mistake gives the other side a point.
+        </p>
+        <div class="difficulty">
+          <button class="btn" data-d="easy">Easy</button>
+          <button class="btn" data-d="med">Medium</button>
+          <button class="btn" data-d="hard">Hard</button>
+        </div>
+        <div id="mobileHome" class="mobile-page mobile-home">
+          <h1>Court Clash<br />Pickleball</h1>
+          <div class="mobile-actions">
+            <button class="btn" id="mobilePlay">Play</button>
+            <button class="btn" id="onlineOpen">Play online</button>
+            <button class="btn alt" id="mobilePractice">Practice</button>
+            <button class="btn alt" id="mobileRulesOpen">Rules</button>
+            <button class="btn alt" id="mobileSettingsOpen">Settings</button>
+          </div>
+        </div>
+        <div id="mobileMode" class="mobile-page hide">
+          <h2>Choose game type</h2>
+          <p>Play against AI</p>
+          <div class="mode-options">
+            <button class="btn" data-mode="singles">
+              <strong>1v1</strong><span>You vs one AI</span>
+            </button>
+            <button class="btn" data-mode="doubles">
+              <strong>2v2</strong><span>You and a teammate vs two AIs</span>
+            </button>
+          </div>
+          <button class="btn alt" id="mobileModeBack">Back</button>
+        </div>
+        <div id="mobileChoose" class="mobile-page hide">
+          <h2>Choose difficulty</h2>
+          <p>First to 11, win by 2.</p>
+          <div class="difficulty">
+            <button class="btn" data-d="easy">Easy</button>
+            <button class="btn" data-d="med">Medium</button>
+            <button class="btn" data-d="hard">Hard</button>
+          </div>
+          <button class="btn alt" id="mobileChooseBack">Back</button>
+        </div>
+        <div id="mobileRulesPage" class="mobile-page mobile-rules hide">
+          <h2>Rules</h2>
+          <ul>
+            <li>
+              <strong>Scoring</strong
+              ><span
+                >First to 11, win by 2. Fair rally mode scores every rally. In
+                official side-out mode only the server scores; if the server
+                loses, the serve changes with no point.</span
+              >
+            </li>
+            <li>
+              <strong>Serve</strong
+              ><span
+                >Serve underhand and cross-court into the opposite service box,
+                past the kitchen. Singles allows one serve attempt per turn.
+                Service-box lines are in.</span
+              >
+            </li>
+            <li>
+              <strong>Two-bounce</strong
+              ><span
+                >The serve and return must bounce before either player can
+                volley. Return the ball before its second bounce.</span
+              >
+            </li>
+            <li>
+              <strong>Kitchen</strong
+              ><span
+                >No volley while touching the kitchen or its line. You may enter
+                to play a ball after it bounces.</span
+              >
+            </li>
+            <li>
+              <strong>In / Out</strong
+              ><span
+                >Keep the ball in bounds; lines are in. A ball hit out, into the
+                net, or not returned in time loses the rally.</span
+              >
+            </li>
+            <li>
+              <strong>Score call</strong
+              ><span>Call the server's score first.</span>
+            </li>
+          </ul>
+          <button class="btn alt" id="mobileRulesBack">Back</button>
+        </div>
+        <div id="mobilePracticePage" class="mobile-page mobile-practice hide">
+          <h2 id="practiceTitle">Practice</h2>
+          <p id="practiceCopy"></p>
+          <div class="practice-progress" id="practiceProgress" aria-live="polite"></div>
+          <button class="btn" id="practiceNext">Next</button>
+          <button class="btn alt" id="practiceBack">Back</button>
+        </div>
+        <div id="mobileSettingsPage" class="mobile-page mobile-settings hide">
+          <h2>Settings</h2>
+          <label class="setting-name"><span>Player name (up to 8 characters)</span><input id="displayName" type="text" maxlength="8" autocomplete="nickname" value="Player" /></label>
+          <label class="setting-toggle"><span>Left-handed controls</span><input id="leftHanded" type="checkbox" /></label>
+          <label class="setting-toggle"><span>Haptic feedback</span><input id="haptics" type="checkbox" /></label>
+          <label class="setting-toggle"><span>Low-quality mode</span><input id="lowQuality" type="checkbox" /></label>
+          <label class="setting-range"><span>Master volume <output id="masterValue"></output></span><input id="masterVolume" type="range" min="0" max="100" value="80" /></label>
+          <label class="setting-range"><span>Effects volume <output id="effectsValue"></output></span><input id="effectsVolume" type="range" min="0" max="100" value="75" /></label>
+          <button class="btn alt" id="mobileSettingsBack">Back</button>
+        </div>
+      </div>
+
+      <div class="ov hide" id="chars">
+        <h2>Pick your player</h2>
+        <div class="grid" id="grid"></div>
+        <button class="btn alt" id="sc"></button>
+        <p id="scd"></p>
+        <button class="btn" id="go">Start match</button>
+        <button class="btn alt" id="back">Back</button>
+      </div>
+
+      <div class="ov hide" id="msgov">
+        <h2 id="mt"></h2>
+        <p id="mp"></p>
+        <button class="btn" id="b1"></button>
+        <button class="btn alt" id="b2">Restart</button>
+        <button class="btn alt" id="b3">Main menu</button>
+      </div>
+
+      <div class="ov hide online-overlay" id="online">
+        <h2 id="onlineTitle">Online multiplayer</h2>
+        <p id="onlineStatus" aria-live="polite">Connect with a friend using a room code.</p>
+        <div class="online-form" id="onlineLobby">
+          <p class="online-name-hint">Choose your character, set up a match, browse public rooms, or enter a private room code.</p>
+          <section class="online-character-section" aria-labelledby="onlineCharacterTitle">
+            <div class="online-character-heading">
+              <h3 id="onlineCharacterTitle">Choose your character</h3>
+              <span id="onlineCharacterDescription" aria-live="polite"></span>
+            </div>
+            <div class="online-character-grid" id="onlineCharacters" role="group" aria-label="Choose a character"></div>
+          </section>
+          <div class="online-settings">
+            <label>Game type<select id="onlineGameType"><option value="singles">1v1 real players</option><option value="doubles">2v2 real players</option></select></label>
+            <label>Scoring rules<select id="onlineScoring"><option value="rally">Fair rally scoring</option><option value="official">Official side-out scoring</option></select></label>
+            <label>Room visibility<select id="onlineVisibility"><option value="private">Private (invite code + host approval)</option><option value="public">Public (anyone can join)</option></select></label>
+          </div>
+          <div class="online-create-actions">
+            <button class="btn alt" id="onlineConnect" type="button">Connect</button>
+            <button class="btn" id="onlineCreate" type="button" disabled>Create room</button>
+          </div>
+          <section class="online-public-section" aria-labelledby="onlinePublicTitle">
+            <div class="online-section-heading">
+              <h3 id="onlinePublicTitle">Public rooms</h3>
+              <button class="btn alt" id="onlineBrowse" type="button" disabled>Refresh</button>
+            </div>
+            <div class="public-rooms" id="publicRooms" aria-label="Public rooms">
+              <span class="muted">Connect to browse public rooms.</span>
+            </div>
+          </section>
+          <section class="online-code-section" aria-labelledby="onlineCodeTitle">
+            <h3 id="onlineCodeTitle">Join with a room code</h3>
+            <label>Room code<input id="onlineCode" maxlength="6" autocomplete="off" autocapitalize="characters" /></label>
+            <button class="btn alt" id="onlineJoin" type="button" disabled>Join room</button>
+          </section>
+        </div>
+        <div class="online-room hide" id="onlineRoom">
+          <span id="onlineRoomInfo"></span>
+          <span id="onlineRoomCodeLabel">Room code</span>
+          <strong id="onlineRoomCode"></strong>
+          <span id="onlinePlayers"></span>
+          <div class="online-requests" id="onlineRequests" aria-label="Join requests"></div>
+          <button class="btn hide" id="onlineStart" type="button" disabled>Start match</button>
+        </div>
+        <div class="online-actions">
+          <button class="btn alt" id="onlineLeave" type="button">Back to menu</button>
+        </div>
+      </div>
+    </div>
+    <div id="side">
+      <h3>Keyboard controls</h3>
+      <p>
+        <span class="wasd-keys" role="group" aria-label="WASD movement keys"
+          ><span class="k key-w">W</span><span class="k key-a">A</span
+          ><span class="k key-s">S</span><span class="k key-d">D</span
+          ><span class="move-label">Move</span></span
+        ><br />
+        <span class="k">Space</span> hit or serve<br />
+        <span class="k">←</span><span class="k">→</span> aim left or right<br />
+        <span class="k">Shift</span> + Space deep drive<br />
+        <span class="k">X</span> + Space soft dink<br />
+        <span class="k">Q</span> Power Drive · <span class="k">E</span> Drop Shot<br />
+        <span class="k">R</span> Topspin Curve<br />
+        <span class="k">Esc</span> / <span class="k">P</span> pause
+      </p>
+      <div class="tips">
+        <span class="touch"
+          >Circle stick: move<br />HIT button: swing or serve<br />Swipe on
+          the court or drag HIT to aim<br />Short tap = soft dink · Long swipe =
+          deep drive<br />Tap Drive, Drop, or Curve to use that skill<br /></span
+        >
+        <span class="kb"
+          >WASD: move · Space: hit<br />← / → aim · Shift deep · X dink<br />Q: Drive · E: Drop · R: Curve<br /></span
+        >Serve underhand, cross-court, past the kitchen.<br />Let the ball
+        bounce on the first two shots.<br />No volleys in the kitchen or on
+        its line (green).<br />Scoring can be switched to official side-out on
+        the next screen.
+      </div>
+      <p class="muted">
+        Mouse or touch also works: drag one half to move and swipe the other
+        half to hit.
+      </p>
+    </div>
+    <div id="orientationNotice" class="orientation-notice hide" role="status" aria-live="polite">
+      <span>This browser cannot rotate automatically. Turn your phone sideways for landscape play.</span>
+      <button id="orientationNoticeClose" type="button" aria-label="Dismiss orientation message">OK</button>
+    </div>
+    <script src="game.js"></script>
+    <script src="online.js"></script>
+  </body>
+</html>

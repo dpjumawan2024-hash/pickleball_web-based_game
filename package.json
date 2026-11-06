@@ -1,0 +1,16 @@
+{
+  "name": "court-clash-pickleball",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Court Clash Pickleball with room-code online 1v1 matches",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
