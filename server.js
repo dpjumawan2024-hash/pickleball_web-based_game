@@ -10,7 +10,7 @@ const ROOT = __dirname;
 const PORT = Number(process.env.PORT) || 3000;
 const GRAVITY = 32;
 const TICK = 1 / 30;
-const BROADCAST_EVERY = 2;
+const BROADCAST_EVERY = 1;
 const SKILL_HIT_BUFFER_MS = 4000;
 const SKILL_COOLDOWNS = { drive: 8, drop: 10, curve: 8 };
 const CHARACTERS = [
@@ -406,7 +406,7 @@ function land(room) {
     return;
   }
   if (game.bounces >= 1) {
-    point(room, 1 - last, "Double bounce");
+    point(room, last, "Double bounce");
     return;
   }
   game.bounces++;

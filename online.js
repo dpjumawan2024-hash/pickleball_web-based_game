@@ -6,6 +6,7 @@
   const characterStats = window.CourtClashProfile?.getCharacters() || [];
   const input = { x: 0, y: 0, ax: 0, ay: -0.5 };
   const keys = new Set();
+  const BALL_INTERPOLATION_DELAY_MS = 80;
   let socket = null;
   let connected = false;
   let active = false;
@@ -13,7 +14,7 @@
   let slot = 0;
   let state = null;
   let visualPlayers = null;
-  let ballReceivedAt = 0;
+  let ballSnapshots = [];
   let sendElapsed = 0;
   let pointer = null;
   let ignoreNextEnd = false;
@@ -280,12 +281,27 @@
           (state.game.score[0] !== message.game.score[0] || state.game.score[1] !== message.game.score[1])) {
         window.CourtClashEffects?.buzz([24, 40, 32]);
       }
+      if (message.game?.ball) {
+        if (!state?.game ||
+            state.game.phase !== message.game.phase ||
+            state.game.shots !== message.game.shots) {
+          ballSnapshots = [];
+          ballTrail = [];
+        }
+        const ball = message.game.ball;
+        ballSnapshots.push({
+          receivedAt: performance.now(),
+          x: ball.x,
+          y: ball.y,
+          z: ball.z,
+        });
+        if (ballSnapshots.length > 8) ballSnapshots.shift();
+        ballTrail.push({ x: ball.x, y: ball.y, z: ball.z });
+        if (ballTrail.length > 8) ballTrail.shift();
+      }
       slot = message.slot;
       roomCode = message.code;
       state = message;
-      ballReceivedAt = performance.now();
-      ballTrail.push({ x: message.game.ball.x, y: message.game.ball.y, z: message.game.ball.z });
-      if (ballTrail.length > 8) ballTrail.shift();
       if (!active && message.status === "playing") startMatch();
       if (!visualPlayers && message.players)
         visualPlayers = message.players.map((player) => player && ({ x: player.x, y: player.y }));
@@ -489,10 +505,25 @@
       X.fillText(label, p.x, p.y - S * 3.65, labelWidth - 8);
     });
     const ball = game.ball;
-    const elapsed = Math.min(0.08, (performance.now() - ballReceivedAt) / 1000);
-    const bx = ball.x + ball.vx * elapsed;
-    const by = ball.y + ball.vy * elapsed;
-    const bz = Math.max(0, ball.z + ball.vz * elapsed - 16 * elapsed * elapsed);
+    const renderAt = performance.now() - BALL_INTERPOLATION_DELAY_MS;
+    let before = ballSnapshots[0] || ball;
+    let after = before;
+    for (let index = 1; index < ballSnapshots.length; index++) {
+      if (ballSnapshots[index].receivedAt >= renderAt) {
+        before = ballSnapshots[index - 1];
+        after = ballSnapshots[index];
+        break;
+      }
+      before = ballSnapshots[index];
+      after = before;
+    }
+    const span = after.receivedAt - before.receivedAt;
+    const fraction = span > 0
+      ? Math.max(0, Math.min(1, (renderAt - before.receivedAt) / span))
+      : 0;
+    const bx = before.x + (after.x - before.x) * fraction;
+    const by = before.y + (after.y - before.y) * fraction;
+    const bz = Math.max(0, before.z + (after.z - before.z) * fraction);
     const bscreen = transform(bx, by);
     ballTrail.forEach((point, index) => {
       const trailPoint = transform(point.x, point.y);
