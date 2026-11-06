@@ -6,7 +6,7 @@ const http = require("node:http");
 const path = require("node:path");
 const { WebSocketServer, WebSocket } = require("ws");
 
-const ROOT = __dirname;
+const PUBLIC_DIR = path.join(__dirname, "public");
 const PORT = Number(process.env.PORT) || 3000;
 const GRAVITY = 32;
 const TICK = 1 / 30;
@@ -27,15 +27,16 @@ const MIME = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
+  ".txt": "text/plain; charset=utf-8",
   ".ttf": "font/ttf",
 };
 const PUBLIC_FILES = new Set([
   "index.html",
-  "styles.css",
-  "game.js",
-  "online.js",
-  "plex-sans.ttf",
-  "OFL.txt",
+  "css/styles.css",
+  "js/game.js",
+  "js/online.js",
+  "assets/fonts/plex-sans.ttf",
+  "assets/fonts/OFL.txt",
 ]);
 
 function send(socket, value) {
@@ -731,7 +732,7 @@ const server = http.createServer((request, response) => {
       response.end("Not found");
       return;
     }
-    filePath = path.join(ROOT, fileName);
+    filePath = path.join(PUBLIC_DIR, fileName);
   } catch (_) {
     response.writeHead(400);
     response.end("Bad request");

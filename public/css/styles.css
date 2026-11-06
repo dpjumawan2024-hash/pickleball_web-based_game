@@ -1,4 +1,4 @@
-@font-face{font-family:"Court Sans";src:url("plex-sans.ttf") format("truetype");font-style:normal;font-weight:100 700;font-display:swap}
+@font-face{font-family:"Court Sans";src:url("../assets/fonts/plex-sans.ttf") format("truetype");font-style:normal;font-weight:100 700;font-display:swap}
 :root{--bg:#12363f;--ink:#f4f7f2;--ball:#e8f24c;--coral:#ff6b57;--sea:#2e9b78;--blue:#2563a8}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:radial-gradient(circle at 30% 20%,#1d5360,#0a2127);overflow:hidden;touch-action:none;overscroll-behavior:none;

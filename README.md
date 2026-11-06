@@ -1,6 +1,52 @@
 # Court Clash Pickleball
 
-A browser pickleball game with local AI play and room-based online 1v1 and 2v2 play. Online rooms live only in server memory; there are no accounts, rankings, or saved match records.
+## Project overview
+
+Court Clash Pickleball is a browser-based pickleball game. Players can practice or play against computer-controlled opponents, or play online with other people in private or public rooms. The game is designed for desktop and touch devices, with keyboard, mouse, and mobile controls.
+
+The project is a prototype focused on playing a match, learning the rules, and connecting players without requiring accounts. Online rooms and match data exist only while the server is running; the game does not save accounts, rankings, or match history.
+
+## Main features
+
+- **Play against AI:** Choose singles (1v1) or doubles (2v2), and select an easy, medium, or hard opponent.
+- **Practice and rules:** Use the practice guide to learn the controls, and read the in-game pickleball rules.
+- **Online multiplayer:** Create or join public and private rooms for 1v1 or 2v2 matches. Private rooms use a six-character code and host approval; public rooms can be found in the room browser.
+- **Match options:** Hosts choose rally scoring or official side-out scoring. Matches are first to 11 points and must be won by 2.
+- **Character choices:** Choose a character before a match. Characters have different movement speed and reach.
+- **Special shots:** Use Power Drive, Drop Shot, and Topspin Curve for tactical variety. Each has its own rules and cooldown.
+- **Desktop and mobile controls:** Play with keyboard and mouse or touch controls. The interface supports portrait and landscape layouts and can request landscape mode on touch devices.
+- **Settings and feedback:** Adjust sound, player name, handedness, haptic feedback, and graphics quality. Pause, resume, or leave a game.
+- **Server-controlled online matches:** The server manages online movement, ball simulation, scoring, room admission, and pause state.
+
+## How the project works
+
+1. **The browser displays and runs the game.** `public/index.html` defines the menus, game canvas, and controls. `public/css/styles.css` handles layout and appearance. `public/js/game.js` draws the game, reads player input, runs local AI matches, and saves preferences in the browser.
+2. **Online play uses a second client script.** `public/js/online.js` connects the browser to the game server using a WebSocket. It sends actions such as creating or joining a room and receives room and match updates.
+3. **Node.js runs the server.** `server.js` serves the files in `public/` and handles online rooms and matches. For online games, it checks player actions and broadcasts the current match state to connected players.
+4. **JSON carries data between parts.** The browser and server encode online messages as JSON so they can exchange information such as room choices, player actions, scores, and match updates. Browser settings are also stored as JSON in local storage.
+5. **The project uses npm to manage its server dependency.** `package.json` lists the `ws` WebSocket library and defines the `npm start` command. `package-lock.json` records the installed dependency version.
+
+### Software and technologies
+
+- **HTML, CSS, and JavaScript:** Build the browser interface, visuals, controls, and game logic.
+- **Node.js 20 or newer:** Runs the server-side JavaScript for hosting the game and online matches.
+- **npm:** Installs the server dependency and starts the server.
+- **`ws`:** Adds WebSocket support for live communication between players and the server.
+- **A modern web browser:** Runs the game. Local AI play can be opened directly in a browser; online play requires the Node.js server.
+
+## Project layout
+
+```text
+Pickle ball/
+├── public/
+│   ├── assets/fonts/     # Game font and its license
+│   ├── css/              # Browser styles
+│   ├── js/               # Browser game and online client
+│   └── index.html        # Browser entry page
+├── server.js             # Node.js HTTP and WebSocket server
+├── package.json          # Project scripts and dependencies
+└── package-lock.json     # Locked dependency versions
+```
 
 On touch devices, the game requests landscape orientation when play is started. Browsers that allow orientation locking enter fullscreen and rotate automatically; if the browser blocks it, the game asks the player to turn the device sideways. Both portrait and landscape layouts are supported. Desktop skill buttons show whether each skill is ready, cooling down, or (for Drop Shot) waiting for a rally.
 
@@ -19,13 +65,13 @@ Online rooms let each player choose a character before creating or joining a roo
 ## Run locally
 
 1. Install Node.js 20 or newer.
-2. Open a terminal in this folder.
+2. Open a terminal in the project folder (the folder containing `package.json`).
 3. Run `npm install` once.
 4. Run `npm start`.
 5. Open `http://localhost:3000` in two to four browser windows or devices on the same network.
 6. Choose **Play online**, select a character, and connect. Create a room after choosing its game type, scoring, and visibility. Join a private room with its six-character code and wait for the host to accept; public rooms can be joined from the room browser. Private 2v2 matches start when the host starts a full four-player room, and public rooms start when full.
 
-Opening `index.html` directly with `file://` still supports local AI play, but online mode needs the server. It will try `ws://localhost:3000/online` when opened as a file.
+Opening `public/index.html` directly with `file://` still supports local AI play, but online mode needs the server. It will try `ws://localhost:3000/online` when opened as a file.
 
 ## Deploy a free prototype on Render
 
