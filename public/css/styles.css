@@ -945,6 +945,19 @@ canvas {
   line-height: 1.45;
   opacity: 0.9;
 }
+#resultDifficulty {
+  width: min(100%, 300px);
+  padding: 9px 14px;
+  border: 1px solid rgba(232, 242, 76, 0.45);
+  border-radius: 10px;
+  background: rgba(232, 242, 76, 0.1);
+  color: var(--ball);
+  font-size: 15px;
+  font-weight: 800;
+}
+#resultDifficulty[hidden] {
+  display: none;
+}
 #scd {
   font-size: 13px;
   max-width: 300px;

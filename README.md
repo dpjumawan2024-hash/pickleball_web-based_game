@@ -106,3 +106,14 @@ Do not deploy the site as a static site: the WebSocket server must keep running.
 This is an early prototype, not a production anti-cheat or account system. Test both browsers together on the deployed HTTPS URL. Local file mode cannot test a match unless a Node server is running on that same computer.
 
 
+## Push Update in repo
+
+Trace the file location of the project: cd "C:\Users\jumaw\OneDrive\Desktop\PT Game Dev Pickle ball\Pickle ball" 
+
+git add .
+
+git commit -m "Describe what you changed"
+
+git push
+
+git status  in status it must end with    dc6902f..a1b2c3d  main -> main for successful push to repo

@@ -452,7 +452,7 @@ function lose(who, m) {
       "Play again",
       () => newGame(diffKey),
       false,
-      DIFF_LABELS[diffKey],
+      `AI difficulty: ${DIFF_LABELS[diffKey]}`,
     );
   }
 }
@@ -1637,13 +1637,11 @@ function hud() {
     );
   }
 }
-function showMsg(t, p, b1, f1, canResume, resultDifficulty = "") {
+function showMsg(t, p, b1, f1, canResume, difficulty = "") {
   $("mt").textContent = t;
   $("mp").textContent = p;
-  $("resultDifficulty").textContent = resultDifficulty
-    ? `AI difficulty: ${resultDifficulty}`
-    : "";
-  $("resultDifficulty").hidden = !resultDifficulty;
+  $("resultDifficulty").textContent = difficulty;
+  $("resultDifficulty").hidden = !difficulty;
   $("b1").textContent = b1;
   $("b3").textContent = t === "Paused" ? "Quit Game" : "Main menu";
   $("b3").style.display = "";
