@@ -58,6 +58,16 @@ Desktop players can click a strike button or press **Q** (Power Drive), **E** (D
 - **Drop Shot:** slower shot aimed into the opponent's kitchen; unavailable on serves; 10-second cooldown.
 - **Topspin Curve:** bends the ball toward the selected aim direction while compensating its flight path to keep the landing near the aim point; 8-second cooldown.
 
+## Tips for beating the AI
+
+The AI moves toward the ball's expected landing point, so avoid sending every shot to the same place. Aim toward the sidelines to make it cover more ground, then change direction or use a short shot into the kitchen when it is deep. Mix deep drives with softer dinks rather than relying on Power Drive alone; drives are faster but less accurate. Topspin Curve can help vary the ball's path. Keep shots inside the court, and remember that the serve and return must bounce before you can volley.
+
+- **Easy:** Learn the controls and focus on returning the ball. Move toward where it is going to land, and try aiming away from the AI instead of hitting straight back.
+- **Medium:** Expect the AI to move and recover more capably than on Easy. Vary shot direction and depth to pull it out of position, then aim for the open side. In 2v2, use the whole court and let your teammate help cover returns.
+- **Hard:** The AI reacts quickly and covers more ground, so a single obvious shot may not be enough. Change direction, mix dinks with deep shots, and use your special shots when they create an opening. Be patient: keep the rally going and take points when the AI makes a mistake.
+
+For a faster player, choose Zippy; for more hitting reach, choose Bruno. In 2v2, control your player while your teammate automatically helps cover the court. Matches use rally scoring by default, so every rally won earns your side a point.
+
 Pause with the on-screen pause button or **Esc** / **P**. The pause menu offers Continue and Quit Game. In online matches, pausing stops the match for both players; either player can continue, while quitting forfeits the match.
 
 Online rooms let each player choose a character before creating or joining a room. Characters keep their speed and reach attributes in online matches. Hosts choose 1v1 or 2v2, rally or official side-out scoring, and public or private visibility. Public waiting rooms appear in the room browser and admit players immediately; private rooms require a code and host approval. Public rooms start when full. A private 2v2 host can start the match only after all four seats are filled. In 2v2, players are assigned to teams in arrival order. Online movement, shots, scoring, cooldowns, room admission, and pause state are controlled by the server.
@@ -94,3 +104,5 @@ Do not deploy the site as a static site: the WebSocket server must keep running.
 - Basic reach validation, input bounds, payload limits, and per-connection message/code-attempt limits.
 
 This is an early prototype, not a production anti-cheat or account system. Test both browsers together on the deployed HTTPS URL. Local file mode cannot test a match unless a Node server is running on that same computer.
+
+

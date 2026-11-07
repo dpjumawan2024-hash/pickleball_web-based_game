@@ -215,9 +215,10 @@ const CHARS = [
 let sel = 0;
 const DIFF = {
   easy: { spd: 7, err: 3.6, react: 0.4 },
-  med: { spd: 9.5, err: 2.2, react: 0.22 },
+  med: { spd: 8.2, err: 3.2, react: 0.32 },
   hard: { spd: 12.5, err: 1.1, react: 0.1 },
 };
+const DIFF_LABELS = { easy: "Easy", med: "Medium", hard: "Hard" };
 let G = null,
   diffKey = "med",
   gameMode = "singles",
@@ -451,6 +452,7 @@ function lose(who, m) {
       "Play again",
       () => newGame(diffKey),
       false,
+      DIFF_LABELS[diffKey],
     );
   }
 }
@@ -1635,9 +1637,13 @@ function hud() {
     );
   }
 }
-function showMsg(t, p, b1, f1, canResume) {
+function showMsg(t, p, b1, f1, canResume, resultDifficulty = "") {
   $("mt").textContent = t;
   $("mp").textContent = p;
+  $("resultDifficulty").textContent = resultDifficulty
+    ? `AI difficulty: ${resultDifficulty}`
+    : "";
+  $("resultDifficulty").hidden = !resultDifficulty;
   $("b1").textContent = b1;
   $("b3").textContent = t === "Paused" ? "Quit Game" : "Main menu";
   $("b3").style.display = "";
